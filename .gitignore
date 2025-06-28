@@ -1,0 +1,19 @@
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Output
+*.png
+*.jpg
+*.npy
+*.log
+results/
+
+# OS 系統自動產生
+.DS_Store
+Thumbs.db
