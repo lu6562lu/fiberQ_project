@@ -1,19 +1,19 @@
-# Jupyter Notebook
+# Jupyter
 .ipynb_checkpoints/
-*.ipynb~
+*.ipynb~ 
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 
-# Output
+# Data & Output
+results/
 *.png
 *.jpg
 *.npy
 *.log
-results/
 
-# OS 系統自動產生
+# OS
 .DS_Store
 Thumbs.db
