@@ -7,7 +7,7 @@ from obspy import read
 
 GAUGE_LENGTH = 10
 SAMPLES = 1000
-MULT = 4.0838  # 若有不同倍率請自行修改
+MULT = 4.0838 
 DAS_CNST = 116/8192*10**(-9)*SAMPLES/GAUGE_LENGTH
 
 def to_datetime64(t):
