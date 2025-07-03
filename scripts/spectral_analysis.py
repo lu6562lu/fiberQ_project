@@ -93,7 +93,8 @@ def process_signal(trace, signal_start_time, signal_duration, noise_duration, pi
     if save_path:
         plt.savefig(f'{save_path}/spec_vel_{trace.stats.station[1:]}.png', dpi=300)
         print(f"Plot saved to {save_path}")
-    plt.show()
+        
+    plt.close()
    
     return signal_amp, signal_freq, noise_amp, noise_freq, snr
 
