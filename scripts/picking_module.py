@@ -104,6 +104,8 @@ def process_event(event_date, data_path, output_path=None, filter_low=1.0, filte
         os.makedirs(os.path.dirname(output_file), exist_ok=True)  # 確保目錄存在
         plt.savefig(output_file, dpi=300)
 
+    plt.close("all")
+
     # Return picks as dictionary
     return {
         "P_pick": p_pick_time_filtered,
