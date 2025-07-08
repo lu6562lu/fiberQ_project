@@ -129,8 +129,7 @@ def plot_velocity_spectra(
         if save_path:
             fig.savefig(f'{save_path}/{save_name}.png', dpi=300)
             print(f"Plot saved to {save_path}/{save_name}.png")
-        plt.show()
-        plt.close(fig)
+    plt.close("all")
         
     return results, fitting, f_filtered
 
