@@ -31,7 +31,7 @@ def load_das_profile(dasf, start, end, channels, das_cnst=DAS_CNST):
     A = np.zeros([len(st), st[0].stats.npts])
     t = time_scale(start, end + 1/SAMPLES)[:A.shape[1]]
     
-    for i in tqdm.tqdm(np.arange(len(st))): 
+    for i in tqdm(np.arange(len(st))): 
         A[i, :] = st[i].data * das_cnst
     
     A = xr.DataArray(
