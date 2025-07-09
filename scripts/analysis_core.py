@@ -10,7 +10,12 @@ from scripts.spectral_analysis import process_signal
 from scripts.resample_module import resample_log_with_log_window
 from scripts.esd_module import calculate_esd_for_stations
 from scripts.picking_module import process_event
-from scripts.fitting import plot_velocity_spectra
+from scripts.fitting import plot_velocity_spectra, plot_velocity_spectra_iteration
+from scripts.surface_reflections_correction import (
+    mseed_upgoing, 
+    plot_up_down_original_mseed, 
+    plot_channel_traces_mseed
+)
 
 from scripts.q_methods import (
     amplitude_ratio_original,
@@ -80,8 +85,9 @@ def analyze_event(
     elif instrument_type == 'fiber':
         fiber_file = f"{data_path}/{instrument_type}/{event_date}.mseed"
         st = read(fiber_file, starttime=start_time, endtime=end_time)
-        trace1 = integrate_stream(Stream([st[int(station1)]]), 'vel')[0]
-        trace2 = integrate_stream(Stream([st[int(station2)]]), 'vel')[0]
+        st_up, st, st_down = mseed_upgoing(st)
+        trace1 = integrate_stream(Stream([st_up[int(station1)]]), 'vel')[0]
+        trace2 = integrate_stream(Stream([st_up[int(station2)]]), 'vel')[0]
 
     # === 6. 信號/雜訊分段 ===
     if wave_type == 's':
@@ -121,18 +127,17 @@ def analyze_event(
     )
 
     # === 8. omega-square擬合需用到的spectral fitting ===
-    omega_results_resample, fitting, f_filtered = plot_velocity_spectra(
+    omega_results_resample, fitting, f_filtered = plot_velocity_spectra_iteration(
         signal_freq_resampled,
         signal_amp_resampled,
         noise_freq_resampled,
         noise_amp_resampled,
         wv,
-        wave=wave_type,
+        initial_guess=[1e-10, 5, 0.01],
         f_range=(3, 20),
-        initial_guess=[10, 5, 0.01],
-        save_path=save_path if plot else None,
-        save_name='omega_fit_resampled' if plot else None,
-        plot=plot
+        wave=wave_type,
+        save_path=save_path,
+        save_name='omega_fit_resampled'
     )
 
     fc_avg = (omega_results_resample[0]['f_c'] + omega_results_resample[1]['f_c']) / 2
